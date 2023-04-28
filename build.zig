@@ -24,7 +24,7 @@ pub fn build(b: *std.Build) void {
         lua.addCSourceFiles(&lib_files, &cflags);
         lua.addCSourceFile("src/lua.c", &cflags);
         lua.linkLibC();
-        lua.install();
+        b.installArtifact(lua);
     }
 
     if (enable_compiler) {
@@ -39,7 +39,7 @@ pub fn build(b: *std.Build) void {
         lua.addCSourceFiles(&lib_files, &cflags);
         lua.addCSourceFile("src/luac.c", &cflags);
         lua.linkLibC();
-        lua.install();
+        b.installArtifact(lua);
     }
 
     if (enable_shared_lib) {
@@ -53,7 +53,7 @@ pub fn build(b: *std.Build) void {
         lua.addCSourceFiles(&core_files, &cflags);
         lua.addCSourceFiles(&lib_files, &cflags);
         lua.linkLibC();
-        lua.install();
+        b.installArtifact(lua);
     }
 
     if (enable_static_lib) {
@@ -67,7 +67,7 @@ pub fn build(b: *std.Build) void {
         lua.addCSourceFiles(&core_files, &cflags);
         lua.addCSourceFiles(&lib_files, &cflags);
         lua.linkLibC();
-        lua.install();
+        b.installArtifact(lua);
     }
 
     if (enable_headers) {
