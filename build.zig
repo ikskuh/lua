@@ -22,7 +22,7 @@ pub fn build(b: *std.Build) void {
         lua.defineCMacro("LUA_COMPAT_5_3", null);
         lua.addCSourceFiles(&core_files, &cflags);
         lua.addCSourceFiles(&lib_files, &cflags);
-        lua.addCSourceFile("src/lua.c", &cflags);
+        lua.addCSourceFile(.{ .file = .{ .path = "src/lua.c" }, .flags = &cflags });
         lua.linkLibC();
         b.installArtifact(lua);
     }
@@ -37,7 +37,7 @@ pub fn build(b: *std.Build) void {
         lua.defineCMacro("LUA_COMPAT_5_3", null);
         lua.addCSourceFiles(&core_files, &cflags);
         lua.addCSourceFiles(&lib_files, &cflags);
-        lua.addCSourceFile("src/luac.c", &cflags);
+        lua.addCSourceFile(.{ .file = .{ .path = "src/luac.c" }, .flags = &cflags });
         lua.linkLibC();
         b.installArtifact(lua);
     }
