@@ -20,9 +20,15 @@ pub fn build(b: *std.Build) void {
             .optimize = optimize,
         });
         lua.defineCMacro("LUA_COMPAT_5_3", null);
-        lua.addCSourceFiles(&core_files, &cflags);
-        lua.addCSourceFiles(&lib_files, &cflags);
-        lua.addCSourceFile(.{ .file = .{ .path = "src/lua.c" }, .flags = &cflags });
+        lua.addCSourceFiles(.{
+            .files = &core_files,
+            .flags = &cflags,
+        });
+        lua.addCSourceFiles(.{
+            .files = &lib_files,
+            .flags = &cflags,
+        });
+        lua.addCSourceFile(.{ .file = b.path("src/lua.c"), .flags = &cflags });
         lua.linkLibC();
         b.installArtifact(lua);
     }
@@ -35,9 +41,15 @@ pub fn build(b: *std.Build) void {
             .optimize = optimize,
         });
         lua.defineCMacro("LUA_COMPAT_5_3", null);
-        lua.addCSourceFiles(&core_files, &cflags);
-        lua.addCSourceFiles(&lib_files, &cflags);
-        lua.addCSourceFile(.{ .file = .{ .path = "src/luac.c" }, .flags = &cflags });
+        lua.addCSourceFiles(.{
+            .files = &core_files,
+            .flags = &cflags,
+        });
+        lua.addCSourceFiles(.{
+            .files = &lib_files,
+            .flags = &cflags,
+        });
+        lua.addCSourceFile(.{ .file = b.path("src/luac.c"), .flags = &cflags });
         lua.linkLibC();
         b.installArtifact(lua);
     }
@@ -50,8 +62,14 @@ pub fn build(b: *std.Build) void {
             .optimize = optimize,
         });
         lua.defineCMacro("LUA_COMPAT_5_3", null);
-        lua.addCSourceFiles(&core_files, &cflags);
-        lua.addCSourceFiles(&lib_files, &cflags);
+        lua.addCSourceFiles(.{
+            .files = &core_files,
+            .flags = &cflags,
+        });
+        lua.addCSourceFiles(.{
+            .files = &lib_files,
+            .flags = &cflags,
+        });
         lua.linkLibC();
         b.installArtifact(lua);
     }
@@ -64,18 +82,34 @@ pub fn build(b: *std.Build) void {
             .optimize = optimize,
         });
         lua.defineCMacro("LUA_COMPAT_5_3", null);
-        lua.addCSourceFiles(&core_files, &cflags);
-        lua.addCSourceFiles(&lib_files, &cflags);
+        lua.addCSourceFiles(.{
+            .files = &core_files,
+            .flags = &cflags,
+        });
+        lua.addCSourceFiles(.{
+            .files = &lib_files,
+            .flags = &cflags,
+        });
         lua.linkLibC();
         b.installArtifact(lua);
     }
 
     if (enable_headers) {
-        b.getInstallStep().dependOn(&b.addInstallHeaderFile("src/lua.h", "lua5.4/lua.h").step);
-        b.getInstallStep().dependOn(&b.addInstallHeaderFile("src/luaconf.h", "lua5.4/luaconf.h").step);
-        b.getInstallStep().dependOn(&b.addInstallHeaderFile("src/lualib.h", "lua5.4/lualib.h").step);
-        b.getInstallStep().dependOn(&b.addInstallHeaderFile("src/lauxlib.h", "lua5.4/lauxlib.h").step);
-        b.getInstallStep().dependOn(&b.addInstallHeaderFile("src/lua.hpp", "lua5.4/lua.hpp").step);
+        b.getInstallStep().dependOn(
+            &b.addInstallHeaderFile(b.path("src/lua.h"), "lua5.4/lua.h").step,
+        );
+        b.getInstallStep().dependOn(
+            &b.addInstallHeaderFile(b.path("src/luaconf.h"), "lua5.4/luaconf.h").step,
+        );
+        b.getInstallStep().dependOn(
+            &b.addInstallHeaderFile(b.path("src/lualib.h"), "lua5.4/lualib.h").step,
+        );
+        b.getInstallStep().dependOn(
+            &b.addInstallHeaderFile(b.path("src/lauxlib.h"), "lua5.4/lauxlib.h").step,
+        );
+        b.getInstallStep().dependOn(
+            &b.addInstallHeaderFile(b.path("src/lua.hpp"), "lua5.4/lua.hpp").step,
+        );
     }
 }
 
